@@ -3,31 +3,62 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NCAA CFB 25 Dynasty</title>
+    <title>EA College Football Dynasty</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-gray-900 text-white font-sans min-h-screen">
-    <header class="bg-gray-800 p-6">
-      <h1 class="text-3xl font-bold text-center">NCAA CFB 25 Dynasty League</h1>
+    <!-- Header -->
+    <header class="bg-gray-800 p-6 shadow-md">
+      <h1 class="text-3xl font-bold text-center">EA College Football 25 Dynasty</h1>
     </header>
 
-    <main class="p-6 space-y-8">
-      <section>
-        <h2 class="text-xl font-semibold border-b border-gray-600 pb-2">Latest Standings</h2>
-        <!-- Google Sheet or mock data will go here -->
-      </section>
+    <!-- Main Grid -->
+    <main class="p-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-5xl mx-auto mt-8">
+        <!-- Previous Champions -->
+        <div class="bg-gray-800 rounded-2xl p-6 shadow-md hover:shadow-lg transition">
+          <h2 class="text-xl font-bold mb-4 border-b border-gray-600 pb-2">Previous Champions</h2>
+          <ul class="space-y-1">
+            <li>2024 – Max</li>
+            <li>2023 – Zach</li>
+            <li>2022 – Parker</li>
+          </ul>
+        </div>
 
-      <section>
-        <h2 class="text-xl font-semibold border-b border-gray-600 pb-2">Previous Champions</h2>
-        <ul class="list-disc pl-5">
-          <li>2024 - Max</li>
-          <li>2023 - Zach</li>
-        </ul>
-      </section>
+        <!-- Previous Heisman Winners -->
+        <div class="bg-gray-800 rounded-2xl p-6 shadow-md hover:shadow-lg transition">
+          <h2 class="text-xl font-bold mb-4 border-b border-gray-600 pb-2">Previous Heisman Winners</h2>
+          <ul class="space-y-1">
+            <li>2024 – Travis Hunter</li>
+            <li>2023 – Caleb Williams</li>
+          </ul>
+        </div>
+
+        <!-- All-Time Records -->
+        <div class="bg-gray-800 rounded-2xl p-6 shadow-md hover:shadow-lg transition">
+          <h2 class="text-xl font-bold mb-4 border-b border-gray-600 pb-2">All-Time Records</h2>
+          <ul class="space-y-1">
+            <li>Zach: 32-10</li>
+            <li>Max: 28-14</li>
+            <li>Thomas: 25-17</li>
+          </ul>
+        </div>
+
+        <!-- Current Recruiting Rank -->
+        <div class="bg-gray-800 rounded-2xl p-6 shadow-md hover:shadow-lg transition">
+          <h2 class="text-xl font-bold mb-4 border-b border-gray-600 pb-2">Current Recruiting Rank</h2>
+          <ul class="space-y-1">
+            <li>1. Max</li>
+            <li>2. Zach</li>
+            <li>3. Grady</li>
+          </ul>
+        </div>
+      </div>
     </main>
 
-    <footer class="bg-gray-800 p-4 text-center text-sm text-gray-400">
-      Made with 💻 by Mr. Stine for a couple dumbasses
+    <!-- Footer -->
+    <footer class="bg-gray-800 p-4 text-center text-sm text-gray-400 mt-10">
+      Built for the EA CFB 25 Dynasty League by Mr. Stine
     </footer>
   </body>
 </html>
