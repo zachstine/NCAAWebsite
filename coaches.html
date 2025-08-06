@@ -12,44 +12,51 @@
   </header>
 
   <main class="p-6 max-w-4xl mx-auto space-y-6">
-    <p class="text-lg">Tracking dynasty greatness. Below are coach records over the years — wins, losses, and the legacy they’re building.</p>
-
-    <table class="w-full text-left table-auto border border-gray-600">
-      <thead class="bg-gray-700">
-        <iframe 
-    src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSdECs09YFbUdH6cW7K5R-8UxULxSGCWCz9aufX4M9z2UAxG7NhzLK7IXDsXxZ2G2zuJ-ywh9Cvo1f/pubhtml" 
-    width="100%" 
-    height="500" 
-    frameborder="0">
-  </iframe>
-        <tr>
-          <th class="p-2">Coach</th>
-          <th class="p-2">Wins</th>
-          <th class="p-2">Losses</th>
-          <th class="p-2">Titles</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="border-t border-gray-600">
-          <td class="p-2">Zach</td>
-          <td class="p-2">32</td>
-          <td class="p-2">10</td>
-          <td class="p-2">1</td>
-        </tr>
-        <tr class="border-t border-gray-600">
-          <td class="p-2">Max</td>
-          <td class="p-2">28</td>
-          <td class="p-2">14</td>
-          <td class="p-2">1</td>
-        </tr>
-      </tbody>
-    </table>
-
+    <h2 class="text-xl font-bold mb-4">Live Coach Records</h2>
+  
+    <div class="overflow-x-auto">
+      <table id="coachTable" class="w-full text-left table-auto border border-gray-600">
+        <thead class="bg-gray-700">
+          <tr>
+            <th class="p-2">Coach</th>
+            <th class="p-2">Wins</th>
+            <th class="p-2">Losses</th>
+            <th class="p-2">Titles</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-100" id="coachTableBody">
+          <!-- Data rows will be inserted here -->
+        </tbody>
+      </table>
+    </div>
+  
     <a href="index.html" class="inline-block mt-6 bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-lg">
       ← Back to Home
     </a>
   </main>
-
+  <script>
+    fetch("https://opensheet.elk.sh/2PACX-1vSSdECs09YFbUdH6cW7K5R-8UxULxSGCWCz9aufX4M9z2UAxG7NhzLK7IXDsXxZ2G2zuJ-ywh9Cvo1f/Sheet1")
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.getElementById("coachTableBody");
+        data.forEach(row => {
+          const tr = document.createElement("tr");
+          tr.classList.add("border-t", "border-gray-600");
+  
+          tr.innerHTML = `
+            <td class="p-2">${row.Coach || ""}</td>
+            <td class="p-2">${row.Wins || ""}</td>
+            <td class="p-2">${row.Losses || ""}</td>
+            <td class="p-2">${row.Titles || ""}</td>
+          `;
+  
+          tbody.appendChild(tr);
+        });
+      })
+      .catch(error => {
+        console.error("Error fetching Google Sheet data:", error);
+      });
+  </script>
   <footer class="bg-gray-800 p-4 text-center text-sm text-gray-400 mt-10">
     EA CFB 25 Dynasty League • Mr. Stine
   </footer>
