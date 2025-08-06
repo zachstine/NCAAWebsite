@@ -12,18 +12,50 @@
   </header>
 
   <main class="p-6 max-w-4xl mx-auto space-y-6">
-    <p class="text-lg">Who’s loading up for next season? This is your leaderboard for the best recruiting classes in the dynasty.</p>
-
-    <ol class="list-decimal pl-6 space-y-1">
-      <li>Max – 5⭐ x2, 4⭐ x7</li>
-      <li>Zach – 5⭐ x1, 4⭐ x6</li>
-      <li>Grady – 4⭐ x5</li>
-    </ol>
-
+    <h2 class="text-xl font-bold mb-4">Current Recruiting Rankings</h2>
+  
+    <div class="overflow-x-auto">
+      <table class="w-full text-left table-auto border border-gray-600">
+        <thead class="bg-gray-700">
+          <tr>
+            <th class="p-2">Rank</th>
+            <th class="p-2">Coach</th>
+            <th class="p-2">5⭐</th>
+            <th class="p-2">4⭐</th>
+            <th class="p-2">3⭐</th>
+          </tr>
+        </thead>
+        <tbody id="recruitingTableBody" class="text-gray-100">
+          <!-- Data loads here -->
+        </tbody>
+      </table>
+    </div>
+  
     <a href="index.html" class="inline-block mt-6 bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-lg">
       ← Back to Home
     </a>
   </main>
+  
+  <script>
+    fetch("https://opensheet.elk.sh/2PACX-1vSSdECs09YFbUdH6cW7K5R-8UxULxSGCWCz9aufX4M9z2UAxG7NhzLK7IXDsXxZ2G2zuJ-ywh9Cvo1f/Recruiting")
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.getElementById("recruitingTableBody");
+        data.forEach(row => {
+          const tr = document.createElement("tr");
+          tr.classList.add("border-t", "border-gray-600");
+          tr.innerHTML = `
+            <td class="p-2">${row.Rank || ""}</td>
+            <td class="p-2">${row.Coach || ""}</td>
+            <td class="p-2">${row["5 Stars"] || ""}</td>
+            <td class="p-2">${row["4 Stars"] || ""}</td>
+            <td class="p-2">${row["3 Stars"] || ""}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      });
+  </script>
+  
 
   <footer class="bg-gray-800 p-4 text-center text-sm text-gray-400 mt-10">
     EA CFB 25 Dynasty League • Mr. Stine

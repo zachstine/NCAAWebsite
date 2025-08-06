@@ -12,18 +12,46 @@
   </header>
 
   <main class="p-6 max-w-4xl mx-auto space-y-6">
-    <p class="text-lg">Here you’ll find the list of all past champions in the dynasty league. We'll update this each season as a new king of the gridiron is crowned.</p>
-
-    <ul class="list-disc pl-6 space-y-1">
-      <li>2024 – Max (Ohio State)</li>
-      <li>2023 – Zach (Georgia)</li>
-      <li>2022 – Parker (USC)</li>
-    </ul>
-
+    <h2 class="text-xl font-bold mb-4">Previous Champions</h2>
+  
+    <div class="overflow-x-auto">
+      <table class="w-full text-left table-auto border border-gray-600">
+        <thead class="bg-gray-700">
+          <tr>
+            <th class="p-2">Year</th>
+            <th class="p-2">Winner</th>
+            <th class="p-2">Team</th>
+          </tr>
+        </thead>
+        <tbody id="champsTableBody" class="text-gray-100">
+          <!-- Data loads here -->
+        </tbody>
+      </table>
+    </div>
+  
     <a href="index.html" class="inline-block mt-6 bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-lg">
       ← Back to Home
     </a>
   </main>
+  
+  <script>
+    fetch("https://opensheet.elk.sh/2PACX-1vSSdECs09YFbUdH6cW7K5R-8UxULxSGCWCz9aufX4M9z2UAxG7NhzLK7IXDsXxZ2G2zuJ-ywh9Cvo1f/Champions")
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.getElementById("champsTableBody");
+        data.forEach(row => {
+          const tr = document.createElement("tr");
+          tr.classList.add("border-t", "border-gray-600");
+          tr.innerHTML = `
+            <td class="p-2">${row.Year || ""}</td>
+            <td class="p-2">${row.Winner || ""}</td>
+            <td class="p-2">${row.Team || ""}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      });
+  </script>
+  
 
   <footer class="bg-gray-800 p-4 text-center text-sm text-gray-400 mt-10">
     EA CFB 25 Dynasty League • Mr. Stine
