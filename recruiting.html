@@ -29,7 +29,7 @@
         <table class="w-full text-left table-auto border border-gray-600">
             <thead class="bg-gray-700">
             <tr>
-                <th class="p-2">Coach</th>
+                <th class="p-2">Team</th>
                 <th class="p-2">Rank</th>
                 <th class="p-2">5⭐</th>
                 <th class="p-2">4⭐</th>
@@ -75,7 +75,7 @@
                 const tr = document.createElement("tr");
                 tr.classList.add("border-t", "border-gray-600");
                 tr.innerHTML = `
-                  <td class="p-2">${row.Coach}</td>
+                  <td class="p-2">${row.Team}</td>
                   <td class="p-2">${row.Rank}</td>
                   <td class="p-2">${row["5 Stars"]}</td>
                   <td class="p-2">${row["4 Stars"]}</td>
