@@ -52,7 +52,7 @@
         const target = document.getElementById("recruitingList");
         data.forEach(row => {
           const li = document.createElement("li");
-          li.textContent = `${row.Rank}. ${row.Coach}`;
+          li.textContent = `${row.Rank}. ${row.Team}`;
           target.appendChild(li);
         });
       });
