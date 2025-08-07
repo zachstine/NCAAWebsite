@@ -27,6 +27,7 @@
             <th class="p-2">Conference Won</th>
             <th class="p-2">Playoff Appearance</th>
             <th class="p-2">User Wins</th>
+            <th class="p-2">Championship?</th>
           </tr>
         </thead>
         <tbody id="coachTableBody" class="text-gray-100"></tbody>
@@ -74,6 +75,7 @@
                   <td class="p-2">${row["Conference Won"]}</td>
                   <td class="p-2">${row["Playoff Appearance"]}</td>
                   <td class="p-2">${row["User Wins"]}</td>
+                  <td class="p-2">${row["Championship?"]}</td>
                 `;
                 tableBody.appendChild(tr);
               });
