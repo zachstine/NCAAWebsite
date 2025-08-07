@@ -12,51 +12,75 @@
   </header>
 
   <main class="p-6 max-w-4xl mx-auto space-y-6">
-    <h2 class="text-xl font-bold mb-4">Live Coach Records</h2>
-  
-    <div class="overflow-x-auto">
-      <table id="coachTable" class="w-full text-left table-auto border border-gray-600">
+    <h2 class="mt-10 text-xl font-bold">Year-by-Year Coach Records</h2>
+
+    <label for="recordYearSelect" class="block mt-4 mb-2 text-sm">Select Year:</label>
+    <select id="recordYearSelect" class="bg-gray-800 text-white p-2 rounded mb-4"></select>
+    
+    <div id="yearlyCoachContainer" class="overflow-x-auto">
+      <table class="w-full text-left table-auto border border-gray-600">
         <thead class="bg-gray-700">
           <tr>
             <th class="p-2">Coach</th>
             <th class="p-2">Wins</th>
             <th class="p-2">Losses</th>
-            <th class="p-2">Titles</th>
+            <th class="p-2">Conference Won</th>
+            <th class="p-2">Playoff Appearance</th>
+            <th class="p-2">User Wins</th>
           </tr>
         </thead>
-        <tbody class="text-gray-100" id="coachTableBody">
-          <!-- Data rows will be inserted here -->
-        </tbody>
+        <tbody id="coachTableBody" class="text-gray-100"></tbody>
       </table>
     </div>
+    
   
     <a href="index.html" class="inline-block mt-6 bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-lg">
       ← Back to Home
     </a>
   </main>
   <script>
-    fetch("https://opensheet.elk.sh/1YelSwe2frFL_FvB3ul8bmZrWCYyULFCZqbfx6oO_Fr4/Coaches")
+    const coachSheetURL = "https://opensheet.elk.sh/1YelSwe2frFL_FvB3ul8bmZrWCYyULFCZqbfx6oO_Fr4/Coaches_Yearly";
+  
+    fetch(coachSheetURL)
       .then(res => res.json())
       .then(data => {
-        const tbody = document.getElementById("coachTableBody");
-        data.forEach(row => {
-          const tr = document.createElement("tr");
-          tr.classList.add("border-t", "border-gray-600");
+        const years = [...new Set(data.map(row => row.Year))].sort().reverse();
+        const dropdown = document.getElementById("recordYearSelect");
+        const tableBody = document.getElementById("coachTableBody");
   
-          tr.innerHTML = `
-            <td class="p-2">${row.Coach || ""}</td>
-            <td class="p-2">${row.Wins || ""}</td>
-            <td class="p-2">${row.Losses || ""}</td>
-            <td class="p-2">${row.Titles || ""}</td>
-          `;
-  
-          tbody.appendChild(tr);
+        years.forEach(year => {
+          const option = document.createElement("option");
+          option.value = year;
+          option.textContent = year;
+          dropdown.appendChild(option);
         });
-      })
-      .catch(error => {
-        console.error("Error fetching Google Sheet data:", error);
+  
+        renderCoachTable(years[0]);
+  
+        dropdown.addEventListener("change", (e) => {
+          renderCoachTable(e.target.value);
+        });
+  
+        function renderCoachTable(selectedYear) {
+          tableBody.innerHTML = "";
+          data.filter(row => row.Year === selectedYear)
+              .forEach(row => {
+                const tr = document.createElement("tr");
+                tr.classList.add("border-t", "border-gray-600");
+                tr.innerHTML = `
+                  <td class="p-2">${row.Coach}</td>
+                  <td class="p-2">${row.Wins}</td>
+                  <td class="p-2">${row.Losses}</td>
+                  <td class="p-2">${row["Conference Won"]}</td>
+                  <td class="p-2">${row["Playoff Appearance"]}</td>
+                  <td class="p-2">${row["User Wins"]}</td>
+                `;
+                tableBody.appendChild(tr);
+              });
+        }
       });
   </script>
+  
   <footer class="bg-gray-800 p-4 text-center text-sm text-gray-400 mt-10">
     EA CFB 25 Dynasty League • Mr. Stine
   </footer>
