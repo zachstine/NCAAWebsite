@@ -12,24 +12,33 @@
   </header>
 
   <main class="p-6 max-w-4xl mx-auto space-y-6">
-    <h2 class="text-xl font-bold mb-4">Current Recruiting Rankings</h2>
-  
-    <div class="overflow-x-auto">
-      <table class="w-full text-left table-auto border border-gray-600">
-        <thead class="bg-gray-700">
-          <tr>
-            <th class="p-2">Rank</th>
-            <th class="p-2">Team</th>
-            <th class="p-2">5⭐</th>
-            <th class="p-2">4⭐</th>
-            <th class="p-2">3⭐</th>
-          </tr>
-        </thead>
-        <tbody id="recruitingTableBody" class="text-gray-100">
-          <!-- Data loads here -->
-        </tbody>
-      </table>
-    </div>
+    <!-- All-Time Recruiting Summary -->
+        <h2 class="text-xl font-bold mb-4">All-Time Recruiting Summary</h2>
+        <!-- Your all-time recruiting table already here -->
+
+        <!-- Divider -->
+        <hr class="my-10 border-gray-700">
+
+        <!-- Year-by-Year Dropdown Section -->
+        <h2 class="text-xl font-bold mt-10">Year-by-Year Recruiting Classes</h2>
+
+        <label for="yearSelect" class="block mt-4 mb-2 text-sm">Select Year:</label>
+        <select id="yearSelect" class="bg-gray-800 text-white p-2 rounded mb-4"></select>
+
+        <div id="yearlyRecruitingContainer" class="overflow-x-auto">
+        <table class="w-full text-left table-auto border border-gray-600">
+            <thead class="bg-gray-700">
+            <tr>
+                <th class="p-2">Coach</th>
+                <th class="p-2">Rank</th>
+                <th class="p-2">5⭐</th>
+                <th class="p-2">4⭐</th>
+                <th class="p-2">3⭐</th>
+            </tr>
+            </thead>
+            <tbody id="recruitingTableBody" class="text-gray-100"></tbody>
+        </table>
+        </div>
   
     <a href="index.html" class="inline-block mt-6 bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-lg">
       ← Back to Home
@@ -37,24 +46,47 @@
   </main>
   
   <script>
-    fetch("https://opensheet.elk.sh/1YelSwe2frFL_FvB3ul8bmZrWCYyULFCZqbfx6oO_Fr4/Recruiting")
+    const sheetURL = "https://opensheet.elk.sh/1YelSwe2frFL_FvB3ul8bmZrWCYyULFCZqbfx6oO_Fr4/Recruiting_Yearly";
+  
+    fetch(sheetURL)
       .then(res => res.json())
       .then(data => {
-        const tbody = document.getElementById("recruitingTableBody");
-        data.forEach(row => {
-          const tr = document.createElement("tr");
-          tr.classList.add("border-t", "border-gray-600");
-          tr.innerHTML = `
-            <td class="p-2">${row.Rank || ""}</td>
-            <td class="p-2">${row.Team || ""}</td>
-            <td class="p-2">${row["5 Stars"] || ""}</td>
-            <td class="p-2">${row["4 Stars"] || ""}</td>
-            <td class="p-2">${row["3 Stars"] || ""}</td>
-          `;
-          tbody.appendChild(tr);
+        const years = [...new Set(data.map(row => row.Year))].sort().reverse();
+        const dropdown = document.getElementById("yearSelect");
+        const tableBody = document.getElementById("recruitingTableBody");
+  
+        years.forEach(year => {
+          const option = document.createElement("option");
+          option.value = year;
+          option.textContent = year;
+          dropdown.appendChild(option);
         });
+  
+        renderTable(years[0]);
+  
+        dropdown.addEventListener("change", (e) => {
+          renderTable(e.target.value);
+        });
+  
+        function renderTable(selectedYear) {
+          tableBody.innerHTML = "";
+          data.filter(row => row.Year === selectedYear)
+              .forEach(row => {
+                const tr = document.createElement("tr");
+                tr.classList.add("border-t", "border-gray-600");
+                tr.innerHTML = `
+                  <td class="p-2">${row.Coach}</td>
+                  <td class="p-2">${row.Rank}</td>
+                  <td class="p-2">${row["5 Stars"]}</td>
+                  <td class="p-2">${row["4 Stars"]}</td>
+                  <td class="p-2">${row["3 Stars"]}</td>
+                `;
+                tableBody.appendChild(tr);
+              });
+        }
       });
   </script>
+  
   
 
   <footer class="bg-gray-800 p-4 text-center text-sm text-gray-400 mt-10">
